@@ -1,0 +1,50 @@
+name: cross_build
+
+on:
+  push:
+    branches:
+      - '*develop*'
+      - '*master*'
+  pull_request:
+    branches:
+      - '*develop*'
+      - '*master*'
+
+jobs:
+  cross_build:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v2
+
+      - name: Build and test on Linux and macOS
+        if: runner.os != 'Windows'
+        run: chmod +x ./ci.sh && ./ci.sh
+
+      - name: Build and test on Windows
+        if: runner.os == 'Windows'
+        run: .\ci.bat
+
+      - name: Upload hello on Linux and macOS
+        if: runner.os != 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: hello-${{ matrix.os }}
+          path: build/hello
+
+      - name: Upload hello on Windows
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: hello-${{ matrix.os }}
+          path: build/Release/hello.exe

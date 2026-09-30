@@ -16,3 +16,14 @@
 === Етап 4 ===
 Запит до Copilot для ci.bat та ci.sh:
 Створи скрипти локальної збірки проєкту: ci.bat для Windows cmd та ci.sh для bash. Скрипт повинен перевіряти або створювати директорію build, переходити в неї, конфігурувати проєкт через cmake .. з увімкненим тестуванням -DBUILD_TESTING=ON, збирати проєкт у конфігурації Release та запускати тести за допомогою ctest --output-on-failure.
+=== Етап 5 ===
+Запит до Copilot для .github/workflows/ci.yml:
+Створи файл GitHub Actions workflow (.github/workflows/ci.yml) з назвою cross_build.
+Вимоги:
+1. Trigger: запуск при push або pull_request у гілки, що містять develop або master.
+2. Job: створити одну job cross_build з матрицею (strategy: matrix) для трьох ОС: ubuntu-latest, windows-latest, macos-latest.
+3. Steps:
+   - actions/checkout@v4
+   - встановлення CMake за допомогою jwlawson/actions-setup-cmake@v2
+   - запуск скрипту: на Linux та macOS запускати ./ci.sh, а на Windows запускати ci.bat
+   - збереження артефактів (actions/upload-artifact@v4) виконуваного файлу hello для кожної ОС.
