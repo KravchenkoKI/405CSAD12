@@ -3,22 +3,21 @@ name: cross_build
 on:
   push:
     branches:
-      - '*develop*'
-      - '*master*'
+      - '**develop**'
+      - '**master**'
   pull_request:
     branches:
-      - '*develop*'
-      - '*master*'
+      - '**develop**'
+      - '**master**'
 
 jobs:
   cross_build:
-    strategy:
-      matrix:
-        os:
-          - ubuntu-latest
-          - windows-latest
-          - macos-latest
+    name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
       - name: Checkout repository
@@ -26,14 +25,19 @@ jobs:
 
       - name: Set up CMake
         uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: '3.28.x'
 
       - name: Build and test on Linux and macOS
         if: runner.os != 'Windows'
-        run: chmod +x ./ci.sh && ./ci.sh
+        run: |
+          chmod +x ./ci.sh
+          ./ci.sh
 
       - name: Build and test on Windows
         if: runner.os == 'Windows'
-        run: .\ci.bat
+        shell: cmd
+        run: ci.bat
 
       - name: Upload hello on Linux and macOS
         if: runner.os != 'Windows'
@@ -41,10 +45,14 @@ jobs:
         with:
           name: hello-${{ matrix.os }}
           path: build/hello
+          if-no-files-found: warn
 
       - name: Upload hello on Windows
         if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
         with:
           name: hello-${{ matrix.os }}
-          path: build/Release/hello.exe
+          path: |
+            build/Release/hello.exe
+            build/hello.exe
+          if-no-files-found: warn
