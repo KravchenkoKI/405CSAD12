@@ -1,3 +1,4 @@
+=== Етап 1 ===
 Запит для main.cpp:
 Створи мінімальну програму C++ Hello World у файлі main.cpp, яка виводить привітання у консоль.
 === Етап 2 ===
@@ -12,3 +13,6 @@
 
 Запит до Copilot для оновлення CMakeLists.txt:
 Онови CMakeLists.txt для C++17: винеси math_operations в окрему бібліотеку і скомпонуй з hello; завантаж Google Test через FetchContent; увімкни тестування через include(CTest) та enable_testing(); створи тестовий таргет unit_tests з tests/unit_tests.cpp, скомпонуй його з math_operations та gtest_main, і зареєструй тести через gtest_discover_tests.
+=== Етап 4 ===
+Запит до Copilot для ci.bat та ci.sh:
+Створи скрипти локальної збірки проєкту: ci.bat для Windows cmd та ci.sh для bash. Скрипт повинен перевіряти або створювати директорію build, переходити в неї, конфігурувати проєкт через cmake .. з увімкненим тестуванням -DBUILD_TESTING=ON, збирати проєкт у конфігурації Release та запускати тести за допомогою ctest --output-on-failure.
