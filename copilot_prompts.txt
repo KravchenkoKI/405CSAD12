@@ -1,2 +1,31 @@
+=== Етап 1 ===
 Запит для main.cpp:
 Створи мінімальну програму C++ Hello World у файлі main.cpp, яка виводить привітання у консоль.
+=== Етап 2 ===
+Запит до Copilot для CMakeLists.txt:
+Створи мінімальний кросплатформний CMakeLists.txt для C++ проєкту HelloWorld, який вимагає стандарт C++17 та збирає виконуваний файл hello з main.cpp.
+=== Етап 3 ===
+Запит до Copilot для math_operations:
+Створи заголовний файл math_operations.h з оголошенням функції int add(int a, int b) та файл реалізації math_operations.cpp.
+
+Запит до Copilot для tests/unit_tests.cpp:
+Напиши юніт-тести з використанням фреймворку Google Test для перевірки функції add(int a, int b). Тестовий кейс назви BasicAddition, перевір додавання додатних, від'ємних чисел та нуля.
+
+Запит до Copilot для оновлення CMakeLists.txt:
+Онови CMakeLists.txt для C++17: винеси math_operations в окрему бібліотеку і скомпонуй з hello; завантаж Google Test через FetchContent; увімкни тестування через include(CTest) та enable_testing(); створи тестовий таргет unit_tests з tests/unit_tests.cpp, скомпонуй його з math_operations та gtest_main, і зареєструй тести через gtest_discover_tests.
+=== Етап 4 ===
+Запит до Copilot для ci.bat та ci.sh:
+Створи скрипти локальної збірки проєкту: ci.bat для Windows cmd та ci.sh для bash. Скрипт повинен перевіряти або створювати директорію build, переходити в неї, конфігурувати проєкт через cmake .. з увімкненим тестуванням -DBUILD_TESTING=ON, збирати проєкт у конфігурації Release та запускати тести за допомогою ctest --output-on-failure.
+=== Етап 5 ===
+Запит до Copilot для .github/workflows/ci.yml:
+Створи файл GitHub Actions workflow (.github/workflows/ci.yml) з назвою cross_build.
+Вимоги:
+1. Trigger: запуск при push або pull_request у гілки, що містять develop або master.
+2. Job: створити одну job cross_build з матрицею (strategy: matrix) для трьох ОС: ubuntu-latest, windows-latest, macos-latest.
+3. Steps:
+   - actions/checkout@v4
+   - встановлення CMake за допомогою jwlawson/actions-setup-cmake@v2
+   - запуск скрипту: на Linux та macOS запускати ./ci.sh, а на Windows запускати ci.bat
+   - збереження артефактів (actions/upload-artifact@v4) виконуваного файлу hello для кожної ОС.
+   Запит для виправлення ci.bat:
+Онови ci.bat: додай у рядок виклику cmake прапорці -G "Visual Studio 17 2022" -A x64, зберігши обробку errorlevel.
