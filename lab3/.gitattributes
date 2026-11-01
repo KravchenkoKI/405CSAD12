@@ -1,0 +1,3 @@
+# Пакетні файли Windows мають зберігатися з закінченнями рядків CRLF
+*.bat text eol=crlf
+*.sh  text eol=lf
