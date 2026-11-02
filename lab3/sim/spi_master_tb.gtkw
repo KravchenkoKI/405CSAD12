@@ -1,0 +1,36 @@
+[*]
+[*] GTKWave save file: SPI master testbench (Lab 3, variant 12)
+[*] Opens the first frame in mode 0 (100-900 ns). Zoom Fit shows all 20 frames.
+[*]
+[timestart] 100000
+[size] 1500 820
+[pos] -1 -1
+*-17.350000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] spi_master_tb.
+[treeopen] spi_master_tb.dut.
+[sst_width] 220
+[signals_width] 200
+[sst_expanded] 1
+[sst_vpaned_height] 230
+@28
+spi_master_tb.clk
+spi_master_tb.start
+@22
+spi_master_tb.tx_data[7:0]
+@28
+spi_master_tb.cs_n
+spi_master_tb.sclk
+spi_master_tb.mosi
+spi_master_tb.miso
+@24
+spi_master_tb.dut.u_tx.state[1:0]
+@28
+spi_master_tb.dut.u_tx.sample_tick
+spi_master_tb.busy
+spi_master_tb.rx_valid
+@22
+spi_master_tb.rx_data[7:0]
+@28
+spi_master_tb.done
+[pattern_trace] 1
+[pattern_trace] 0

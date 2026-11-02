@@ -1,0 +1,30 @@
+name: spi_testbench
+
+# Автоматичний запуск тестбенча SPI Master (ЛР3) в Icarus Verilog
+on:
+  push:
+    paths:
+      - 'lab3/**'
+      - '.github/workflows/spi_tb.yml'
+  pull_request:
+    paths:
+      - 'lab3/**'
+      - '.github/workflows/spi_tb.yml'
+
+jobs:
+  simulate:
+    name: Icarus Verilog simulation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Icarus Verilog
+        run: sudo apt-get update && sudo apt-get install -y iverilog
+
+      - name: Compile and run testbench
+        working-directory: lab3
+        run: |
+          iverilog -g2005 -o spi_tb.vvp rtl/spi_master_tx.v rtl/spi_master_rx.v rtl/spi_master.v tb/spi_slave_model.v tb/spi_master_tb.v
+          vvp -n spi_tb.vvp | tee sim_log.txt
+          grep -q "TEST PASSED" sim_log.txt
